@@ -22,7 +22,7 @@
 
 | Front Panel | ECG Electrodes |
 |:-----------:|:--------------:|
-| ![Front Panel](assets/prototype_front.jpeg) | ![ECG Electrodes](assets/prototype_electrodes.jpeg) |
+| ![Front Panel](prototype_front.jpeg) | ![ECG Electrodes](assets/prototype_electrodes.jpeg) |
 | *TFT display, rotary encoder & LED indicators* | *3-lead snap ECG electrodes with 3D-printed housing* |
 
 | Internal — ESP32 Layer | Analog Signal Chain | Full Internal View |
