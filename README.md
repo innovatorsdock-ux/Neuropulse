@@ -27,7 +27,7 @@
 
 | Internal — ESP32 Layer | Analog Signal Chain | Full Internal View |
 |:----------------------:|:-------------------:|:-----------------:|
-| ![ESP32 Layer](assets/prototype_esp32.jpeg) | ![Analog Board](prototype_analog.jpeg) | ![Internal](assets/prototype_internal.jpeg) |
+| ![ESP32 Layer](prototype_esp32.jpeg) | ![Analog Board](prototype_analog.jpeg) | ![Internal](assets/prototype_internal.jpeg) |
 | *ESP32 with heatsink & sensor modules* | *Op-amp signal conditioning board* | *Complete wiring harness* |
 
 </div>
