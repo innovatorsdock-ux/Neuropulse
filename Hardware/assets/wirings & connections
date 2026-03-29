@@ -1,179 +1,166 @@
-# 🧠 NeuroPulse – Hardware Architecture
+# NeuroPulse — Hardware Architecture
 
-<p align="center">
-  <img src="assets/schematic.jpg" width="650"/>
-</p>
-
-<p align="center">
-  <b>Biopotential Sensing • Signal Processing • Real-Time Monitoring</b>
-</p>
+> **Biopotential Sensing · Signal Processing · Real-Time Monitoring**
 
 ---
 
-## ⚙️ System Overview
+## System Overview
 
-The system integrates **ECG signal acquisition, multi-stage amplification, high-resolution ADC conversion**, and **ESP32-based processing**, along with real-time visualization and environmental sensing.
-
----
-
-## 🔗 Signal Flow Architecture
-
-<p align="center">
-
-AD8232 → AD620 → TL072 → LM358 → ADS1115 → ESP32
-
-</p>
+The NeuroPulse system integrates **ECG signal acquisition**, **multi-stage amplification**, **high-resolution ADC conversion**, and **ESP32-based processing**, along with real-time visualization and environmental sensing — engineered for precision biopotential monitoring.
 
 ---
 
-## 🔌 ESP32 Pin Configuration
+## Signal Flow Architecture
 
-### 🧠 Sensor & ADC Interface
-
-| 🧩 Component | 🔌 Pin | 🔗 Connected To |
-|-------------|------|----------------|
-| AD8232 | OUT | AD620 (S+) |
-| AD8232 | GND | AD620 (S-) |
-| AD620 | VOUT | TL072 (Pin 3) |
-| TL072 | Pin 1 | LM358 (Pin 3) |
-| LM358 | Pin 1 | ADS1115 (A0) |
-| ADS1115 | SCL | GPIO 22 |
-| ADS1115 | SDA | GPIO 21 |
-| ADS1115 | ADDR | GND |
+```
+AD8232  ──►  AD620  ──►  TL072  ──►  LM358  ──►  ADS1115  ──►  ESP32
+ ECG        Instr.       Op-Amp      Op-Amp      16-bit ADC    Controller
+ Module     Amp
+```
 
 ---
 
-### ❤️ Heart Rate Sensor (I2C Bus)
+## ESP32 Pin Configuration
 
-| Component | Pin | GPIO |
-|----------|-----|------|
-| MAX30102 | SDA | GPIO 21 |
-| MAX30102 | SCL | GPIO 22 |
+### Sensor & ADC Interface
 
-> 🔁 Shared I2C Bus with ADS1115
-
----
-
-### 🌡️ Environmental Monitoring
-
-| Component | Signal | GPIO |
-|----------|--------|------|
-| DHT11 | DATA | GPIO 13 |
+| Component | Pin  | Connected To   |
+|-----------|------|----------------|
+| AD8232    | OUT  | AD620 (S+)     |
+| AD8232    | GND  | AD620 (S-)     |
+| AD620     | VOUT | TL072 (Pin 3)  |
+| TL072     | Pin 1| LM358 (Pin 3)  |
+| LM358     | Pin 1| ADS1115 (A0)   |
+| ADS1115   | SCL  | GPIO 22        |
+| ADS1115   | SDA  | GPIO 21        |
+| ADS1115   | ADDR | GND            |
 
 ---
 
-### 🖥️ TFT Display (SPI Interface)
+### Heart Rate Sensor — I2C Bus
 
-| Signal | GPIO |
-|--------|------|
-| SCK | GPIO 18 |
-| MOSI | GPIO 23 |
-| CS | GPIO 5 |
-| RESET | GPIO 4 |
-| DC / AO | GPIO 2 |
+| Component | Pin | GPIO    |
+|-----------|-----|---------|
+| MAX30102  | SDA | GPIO 21 |
+| MAX30102  | SCL | GPIO 22 |
+
+> **Note:** Shared I2C Bus with ADS1115
 
 ---
 
-### 🎮 User Input – Rotary Encoder
+### Environmental Monitoring
 
-| Pin | GPIO |
-|-----|------|
+| Component | Signal | GPIO    |
+|-----------|--------|---------|
+| DHT11     | DATA   | GPIO 13 |
+
+---
+
+### TFT Display — SPI Interface
+
+| Signal  | GPIO    |
+|---------|---------|
+| SCK     | GPIO 18 |
+| MOSI    | GPIO 23 |
+| CS      | GPIO 5  |
+| RESET   | GPIO 4  |
+| DC / A0 | GPIO 2  |
+
+---
+
+### User Input — Rotary Encoder
+
+| Pin | GPIO    |
+|-----|---------|
 | CLK | GPIO 33 |
-| DT | GPIO 34 |
-| SW | GPIO 35 |
+| DT  | GPIO 34 |
+| SW  | GPIO 35 |
 
 ---
 
-### 💡 RGB LED Indicator
+### RGB LED Indicator
 
-| Color | GPIO |
-|------|------|
-| 🔴 Red | GPIO 25 |
-| 🟢 Green | GPIO 26 |
-| 🔵 Blue | GPIO 27 |
-| GND | ESP GND |
-
----
-
-### 🔘 Power Control
-
-| Component | Connection |
-|----------|-----------|
-| Toggle Switch (Common) | ESP32 EN |
-| Toggle Switch Pin | 3.3V |
-
-> ⚠️ Add a **10kΩ pull-up resistor** between **EN and 3.3V**
+| Color | GPIO    |
+|-------|---------|
+| Red   | GPIO 25 |
+| Green | GPIO 26 |
+| Blue  | GPIO 27 |
+| GND   | ESP GND |
 
 ---
 
-## ⚡ Power Distribution
+### Power Control
 
-<div align="center">
+| Component             | Connection |
+|-----------------------|------------|
+| Toggle Switch (Common)| ESP32 EN   |
+| Toggle Switch Pin     | 3.3V       |
 
-| Voltage | Components |
-|--------|------------|
-| 🔹 **3.3V Rail** | AD8232, MAX30102, TFT Display, ADS1115, DHT11, Toggle Switch |
-| 🔸 **5V Rail** | AD620, TL072, LM358 |
-
-</div>
+> **Important:** Add a **10 kΩ pull-up resistor** between **EN and 3.3V**
 
 ---
 
-## 🎚️ Signal Conditioning (Gain Configuration)
+## Power Distribution
 
-- 🔹 **100kΩ Gain Resistors**
-  - TL072 → Pin 1 ↔ Pin 2  
-  - LM358 → Pin 1 ↔ Pin 2  
-
-- 🔹 Additional Gain Path  
-  - Pin 2 → GND  
-
-> 📈 Used for **signal amplification & filtering of ECG signals**
+| Rail     | Components                                              |
+|----------|---------------------------------------------------------|
+| **3.3V** | AD8232, MAX30102, TFT Display, ADS1115, DHT11, Toggle Switch |
+| **5V**   | AD620, TL072, LM358                                     |
 
 ---
 
-## 🧩 Components Used
+## Signal Conditioning — Gain Configuration
 
-### 🔹 Core Controller
+```
+TL072  → Pin 1 ↔ Pin 2  [100 kΩ]
+LM358  → Pin 1 ↔ Pin 2  [100 kΩ]
+         Pin 2 → GND    [Additional gain path]
+```
+
+Used for **signal amplification and filtering of ECG signals**.
+
+---
+
+## Components
+
+### Core Controller
 - ESP32 (30-pin)
 
-### 🔹 Analog Front-End
-- AD8232 (ECG Module)
-- AD620 (Instrumentation Amplifier)
-- TL072 (Op-Amp)
-- LM358 (Op-Amp)
+### Analog Front-End
+- AD8232 — ECG Module
+- AD620 — Instrumentation Amplifier
+- TL072 — Op-Amp
+- LM358 — Op-Amp
 
-### 🔹 Data Acquisition
-- ADS1115 (16-bit ADC)
+### Data Acquisition
+- ADS1115 — 16-bit ADC
 
-### 🔹 Sensors
-- MAX30102 (Heart Rate & SpO₂)
-- DHT11 (Temperature & Humidity)
+### Sensors
+- MAX30102 — Heart Rate & SpO₂
+- DHT11 — Temperature & Humidity
 
-### 🔹 Output Modules
+### Output Modules
 - TFT SPI Display
 - RGB LED
 
-### 🔹 Input Controls
+### Input Controls
 - Rotary Encoder
 - Toggle Switch
 
-### 🔹 Passive Components
-- 100kΩ Resistors (Gain)
-- 10kΩ Pull-up Resistor
-- 220Ω Resistors (LED Current Limiting)
+### Passive Components
+- 100 kΩ Resistors (Gain)
+- 10 kΩ Pull-up Resistor
+- 220 Ω Resistors (LED Current Limiting)
 
 ---
 
-## 🧪 Design Notes
+## Design Notes
 
-- 🔁 I2C Bus is shared between **ADS1115 & MAX30102**
-- ⚠️ Keep analog wiring **short & shielded** to reduce noise
-- ⚡ Ensure proper **common grounding**
-- 📊 Optimized for **low-noise ECG signal acquisition**
+- I2C Bus is **shared** between ADS1115 and MAX30102
+- Keep analog wiring **short and shielded** to reduce noise
+- Ensure proper **common ground** across all subsystems
+- Optimized for **low-noise ECG signal acquisition**
 
 ---
 
-<p align="center">
-  ⭐ Designed for Precision • Built for Innovation
-</p>
+*Designed for Precision · Built for Innovation*
