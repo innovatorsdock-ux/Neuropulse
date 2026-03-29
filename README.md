@@ -244,9 +244,8 @@ NeuroPulse/
 │   ├── prototype_esp32.jpeg
 │   ├── prototype_analog.jpeg
 │   └── prototype_internal.jpeg
-├── firmware/
+├── Hardware/
 │   └── neuropulse_main.ino
-├── schematics/
 │   └── hardware_architecture.md
 ├── dashboard/
 │   └── node_red_flow.json
