@@ -238,15 +238,16 @@ NeuroPulse bridges this gap by providing a **research-grade, open-hardware platf
 
 ```
 NeuroPulse/
-├── assets/
-│   ├── prototype_front.jpeg
-│   ├── prototype_electrodes.jpeg
-│   ├── prototype_esp32.jpeg
-│   ├── prototype_analog.jpeg
-│   └── prototype_internal.jpeg
+├── prototype_front.jpeg
+├── prototype_electrodes.jpeg
+├── prototype_esp32.jpeg
+├── prototype_analog.jpeg
+├── prototype_internal.jpeg
 ├── Hardware/
-│   └── neuropulse_main.ino
-│   └── hardware_architecture.md
+│   └── neuropulse.ino
+│   └── schematic.jpeg
+│    └── assets/
+│          └── wirings & connections
 ├── dashboard/
 │   └── node_red_flow.json
 └── README.md
