@@ -12,15 +12,15 @@
 #include "spo2_algorithm.h"
 #include "heartRate.h"
 
-const char* WIFI_SSID     = "Colosseum2";
-const char* WIFI_PASSWORD = "Dbit@2026";
+const char* WIFI_SSID     = "___";
+const char* WIFI_PASSWORD = "__";
 
-const char* MQTT_HOST     = "ace1d79032ba46d3b0b275be6d0b42f4.s1.eu.hivemq.cloud";
-const int   MQTT_PORT     = 8883;
-const char* MQTT_USER     = "InnovatorsArc";
-const char* MQTT_PASSWORD = "Innovators07@";
+const char* MQTT_HOST     = "____";
+const int   MQTT_PORT     = __;
+const char* MQTT_USER     = "__";
+const char* MQTT_PASSWORD = "____";
 
-const char* WAQI_TOKEN    = "f90981143616378a57a85e8c323b01c254a50090";
+const char* WAQI_TOKEN    = "___";
 const float LATITUDE      = 19.0760f;
 const float LONGITUDE     = 72.8777f;
 
